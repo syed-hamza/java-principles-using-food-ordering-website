@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorites - Zoggy Foods</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .navbar {
+            background-color: black;
+            color: white;
+            padding: 20px; /* Add padding to increase horizontal length */
+            width: 98%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            position: fixed; /* Position the navbar at the top */
+            top: 0; /* Align the navbar to the top */
+            left: 0; /* Align the navbar to the left */
+            z-index: 1000; /* Ensure the navbar is above other content */
+        }
+
+        .navbar img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .nav-links {
+            margin-left: auto;
+        }
+
+        .nav-links .nav-link {
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            background-color: black;
+            color: white;
+            width: 200px;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            z-index: 1000;
+            padding-top: 70px;
+            top:10%;
+        }
+
+        .sidebar h3 {
+            margin: 0;
+            padding: 10px;
+        }
+
+        .nav-links {
+            padding: 0;
+        }
+
+        .side-link {
+            display: block; /* Ensures each link takes up the full width */
+            padding: 10px;
+            border-bottom: 1px solid #555;
+            text-decoration: none; /* Removes underline */
+            color: white; /* Sets link color to white */
+        }
+
+        .side-link:hover {
+            background-color: #555;
+        }
+
+        .content {
+            margin-left: 220px; /* Adjust based on the width of the sidebar */
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        .restaurant-card {
+            width: calc(22% - 10px); /* Adjust width dynamically to fit four cards in one line */
+            margin-bottom: 5px; /* Adjust margin as needed */
+            margin-right: 5px; /* Adjust margin as needed */
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+
+
+
+        .restaurant-card img {
+            width: 30%;
+            height: auto;
+        }
+
+
+
+        .restaurant-list {
+            display: flex; /* Use flexbox for layout */
+            justify-content: center; /* Center the restaurant items horizontally */
+            align-items: center; /* Center the restaurant items vertically */
+            margin: 0; /* Remove any margin */
+            padding: 0; /* Remove any padding */
+        }
+
+        .restaurant {
+            margin: 0 20px; /* Add spacing between restaurant items */
+            text-align: center; /* Center the text within each restaurant item */
+        }
+
+        .restaurant-card img {
+            width: 98%; /* Ensure the image fills the container */
+            height: 200px; /* Set a fixed height for all images */
+            object-fit: cover; /* Ensure the image covers the entire container */
+        }
+
+        .restaurant-card .restaurant-header .heart-icon {
+            width: 50px; /* Adjust the width as needed */
+            height: 50px; /* Adjust the height as needed */
+            margin-left: 200px;
+        }
+        .restaurant-card .restaurant-header {
+            display: flex; /* Use flexbox layout */
+            align-items: center; /* Align items vertically */
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="navbar">
+        <h3>Zoggy Foods</h3>
+        <div class="nav-links">
+            <span class="nav-link">Profile</span>
+            <span class="nav-link">Cart</span>
+            <span class="nav-link">Search</span>
+        </div>
+    </div>
+    <<div class="content">
+    <div class="sidebar">
+        <table class="side-links">
+            <tr>
+                <td><a class="side-link" href="order">Orders</a></td>
+            </tr>
+            <tr>
+                <td><a class="side-link" href="favorite">Favorites</a></td>
+            </tr>
+            <tr>
+                <td><a class="side-link" href="#">Payments</a></td>
+            </tr>
+            <tr>
+                <td><a class="side-link" href="address">Address</a></td>
+            </tr>
+            <tr>
+                <td><a class="side-link" href="#">LogOut</a></td>
+            </tr>
+        </table>
+    </div>
+    <h2>My Favorites</h2>
+    <div class="restaurant-card">
+        <a href="/restaurants"> <!-- Add the href attribute with the destination page -->
+            <img src="../static/images/bur.jpg" alt="Restaurant 1">
+        </a>
+        <div class="restaurant-header">
+            <h4>Restaurant1</h4>
+            <img src="../static/images/hearthollow.svg" alt="Favorite" class="heart-icon" onclick="toggleHeart(this)">
+        </div>
+        <p>Description of Restaurant 4</p>
+    </div>
+</div>
+
+</div>
+<script>
+    function toggleHeart(icon) {
+        // Toggle the src attribute of the heart icon between hollow and solid versions
+        if (icon.src.includes('hollow')) {
+            icon.src = '../static/images/heartsolid.svg';
+        } else {
+            icon.src = '../static/images/hearthollow.svg';
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Zoggy Foods</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .navbar {
+            background-color: black;
+            color: white;
+            padding: 20px; /* Add padding to increase horizontal length */
+            width: 98%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            position: fixed; /* Position the navbar at the top */
+            top: 0; /* Align the navbar to the top */
+            left: 0; /* Align the navbar to the left */
+            z-index: 1000; /* Ensure the navbar is above other content */
+        }
+
+        .navbar img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .nav-links {
+            margin-left: auto;
+        }
+
+        .nav-links .nav-link {
+            margin-left: 20px;
+            cursor: pointer;
+        }
+        .cart {
+            display: flex;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            top:50px;
+            width: fit-content;
+            padding: 5px;
+        }
+
+        .cart-img img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .cart-content {
+            padding: 20px;
+        }
+
+        .cart-content h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .quantity-btn {
+            background-color: #f5f5f5;
+            border: none;
+            color: #333;
+            font-size: 16px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .quantity {
+            margin: 0 10px;
+            font-size: 16px;
+        }
+
+        .add-to-cart-btn {
+            background-color: #008cba;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #005f70;
+        }
+
+        .bill {
+            margin-top: 20px;
+        }
+
+        table {
+            width: fit-content;
+            border-collapse: collapse;
+        }
+
+        caption {
+            font-size: 20px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .row{
+            display: flex;
+            margin-left: 20px;
+        }
+
+        .address{
+            display: flex;
+            margin-left: 20px;
+        }
+
+        .address h1{
+            align-self: center;
+            position: relative;
+            left:40%;
+            top:-10%;
+            font-size: 40px;
+        }
+        .address-card{
+            position: relative;
+            top:50%;
+            left:-10%;
+            justify-content: space-between;
+            border: #333333 solid 2px;
+            height: max-content;
+            width: 200px;
+            margin-right: 20px;
+            padding: 10px;
+        }
+
+        .address-card button[type="submit"] {
+            background-color: transparent;
+            border: 2px solid #333333;
+            color: #333333;
+            padding: 8px 15px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+
+        }
+
+        .address-card button[type="submit"]:hover {
+            background-color: #333333;
+            color: #ffffff;
+        }
+        #addAddressBtn{
+            background-color: transparent;
+            border: 2px solid #333333;
+            color: #333333;
+            padding: 8px 15px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            margin-bottom: 10px;
+        }
+        #addAddressBtn:hover{
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        .grid-form {
+            display: grid;
+            grid-gap: 10px;
+        }
+
+        .grid-form input,
+        .grid-form button {
+            width: fit-content;
+            padding: 8px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="navbar">
+        <h3>Zoggy Foods</h3>
+        <div class="nav-links">
+            <a href="profile.html" class="nav-link">Profile</a>
+            <a href="cart.html" class="nav-link">Cart</a>
+            <span class="nav-link">Search</span>
+        </div>
+    </div>
+    <div class="row">
+    <div class="cartpage">
+    <div class="cart">
+        <div class="cart-img">
+<!--            <img th:src="@{/static/images/bur.jpg}">-->
+        </div>
+        <div class="cart-content">
+            <h3 th:text="${foodName}">Food Name</h3>
+            <div class="quantity-control">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div></br>
+            <h3>Total</h3>
+        </div>
+    </div>
+    <div class="cart">
+        <div class="cart-img">
+            <img th:src="@{/static/images/bur.jpg}">
+        </div>
+        <div class="cart-content">
+            <h3 th:text="${foodName}">Food Name</h3>
+            <div class="quantity-control">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div></br>
+            <h3>Total</h3>
+        </div>
+    </div>
+    <div class="bill">
+        <table>
+            <caption><h2>Billing details</h2></caption>
+
+            <tbody>
+            <tr>
+                <td>Item Total</td>
+                <td>$<span th:text="${itemTotal}">10.00</span></td>
+            </tr>
+            <tr>
+                <td>Delivery Fee</td>
+                <td>$<span th:text="${deliveryFee}">10.00</span></td>
+            </tr>
+            <tr>
+                <td>GST and Restaurant charges</td>
+                <td>$<span th:text="${taxes}">10.00</span></td>
+            </tr>
+            <tr>
+                <td>Total pay</td>
+                <td>$<span th:text="${totalPay}">10.00</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+        <div class="address">
+            <h1>Chose Your Address</h1>
+            <div id = "addressPlaceholder">
+                <div class="address-card">
+                    <h2>Home</h2>
+                    <div>
+                        Street: 123 Main St<br>
+                        City: New York<br>
+                        State: New York<br>
+                        Pincode: 10001<br>
+                    </div></br>
+            </div>
+                <button type="submit">Select</button>
+            </div>
+            <div class="address-card" id="addAddressForm">
+                <h2>Add new address</h2>
+                <button type="button" id="addAddressBtn">Add</button>
+                <form id="addressForm" style="display: none;">
+                    <div class="grid-form">
+                        <input type="text" id="street" placeholder="Street">
+                        <input type="text" id="city" placeholder="City">
+                        <input type="text" id="state" placeholder="State">
+                        <input type="text" id="pincode" placeholder="Pincode">
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
+</div>
+<script>
+    console.log(localStorage.getItem("Authorization"))
+    fetch("/cart-address", {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem("Authorization")}`
+        },
+    })
+        .then(response => {
+            if(response.status == 401){
+                alert("Please login");
+                window.location.href = "/login";
+            }
+            if (!response.ok) {
+                return response.text().then(errorMessage => {
+                    throw new Error(errorMessage);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Addresses:", data);
+            const placeholder = document.getElementById("addressPlaceholder");
+            let out = '';
+            for(let i in data) {
+                const addr = data[i];
+                out += `
+            <div class="address-card">
+                <h2>Home</h2>
+                <div>
+                    Street: ${addr.street}<br>
+                    City: ${addr.cityName}<br>
+                    State: ${addr.state}<br>
+                    Pincode: ${addr.pincode}<br>
+                </div>
+                <button type="submit">Select</button>
+            </div>`;
+            }
+            placeholder.innerHTML = out;
+        })
+        .catch(error => {
+            console.error("Error occurred:", error.message);
+            alert(error.message); // Display error message in an alert
+        });
+
+
+    document.getElementById('addAddressBtn').addEventListener('click', function() {
+        var form = document.getElementById('addressForm');
+        if (form.style.display === 'none') {
+            form.style.display = 'block';
+        } else {
+            form.style.display = 'none';
+        }
+    });
+
+    // Function to collect data from the address form and send it to the add-address endpoint
+    function addAddress() {
+        // Get form input values
+        const street = document.getElementById('street').value;
+        const city = document.getElementById('city').value;
+        const state = document.getElementById('state').value;
+        const pincode = document.getElementById('pincode').value;
+
+        // Create addressData object
+        const addressData = {
+            street: street,
+            cityName: city,
+            state: state,
+            pincode: pincode
+        };
+
+        // Get JWT token from localStorage
+        const jwtToken = localStorage.getItem("Authorization");
+
+        // Send addressData to add-address endpoint
+        fetch('/add-address', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            },
+            body: JSON.stringify(addressData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Address added successfully');
+                } else {
+                    throw new Error('Failed to add address');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    // Call addAddress function when the form is submitted
+    document.getElementById('addressForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission behavior
+        addAddress(); // Call addAddress function to send data to the endpoint
+    });
+
+</script>
+
+</body>
+</html>

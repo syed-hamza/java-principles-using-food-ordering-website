@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/menu1.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .navbar {
+            background-color: black;
+            color: white;
+            padding: 20px; /* Add padding to increase horizontal length */
+            width: 98%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            position: fixed; /* Position the navbar at the top */
+            top: 0; /* Align the navbar to the top */
+            left: 0; /* Align the navbar to the left */
+            z-index: 1000; /* Ensure the navbar is above other content */
+        }
+
+        .navbar img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .nav-links {
+            margin-left: auto;
+        }
+
+        .nav-links .nav-link {
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        /* Styling for the form control container */
+        .form-control {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 120px; /* Adjust this value as needed */
+            left: 0;
+
+        }
+
+
+        /* Styling for food category and food type containers */
+        .foodCategory,
+        .foodType {
+            padding: 10px;
+
+        }
+
+        .form-control h1{
+            padding: 10px;
+        }
+
+        /* Styling for labels */
+        .form-control label {
+            font-weight: bold;
+            font-size: 20px;
+            position: relative;
+            left:5px;
+        }
+
+        .menucard {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content:space-between;
+            margin-top: 20px;
+            width:fit-content;
+            position: relative;
+            left:25%;
+            top:30px;
+        }
+
+        .card {
+            width: 300px;
+            margin: 10px;
+            gap:20px;
+            border: black solid 2px;
+            background-color: white;
+            padding: 10px;
+            text-align: left;
+
+        }
+
+        .card img {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            left:35%;
+        }
+
+        .card-content {
+            margin-top: 3px;
+            position: relative;
+            right:10%;
+        }
+
+        .card-content h2 {
+            margin: 0;
+            font-size: 20px;
+            position: relative;
+            left:10%;
+        }
+
+        .card-content p {
+            margin: 5px 0;
+            font-size: 16px;
+            position: relative;
+            left:10%;
+        }
+
+        .card-content .price {
+            font-weight: bold;
+            font-size: 20px;
+            position: relative;
+            right:50%
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+            left:10%;
+
+        }
+
+        .quantity {
+            margin: 0 10px;
+            position: relative;
+            left:10%;
+        }
+
+        .add-to-cart-btn {
+            background-color: #28a745; /* Green color for add to cart button */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            position: relative;
+            left:20%;
+        }
+
+
+    </style>
+
+
+</head>
+<body>
+<div class="container">
+    <div class="navbar">
+
+        <h3>Zoggy Foods</h3>
+        <div class="nav-links">
+            <span class="nav-link">Profile</span>
+            <span class="nav-link">Cart</span>
+            <span class="nav-link">Search</span>
+        </div>
+    </div>
+
+    <div class="menu">
+        <div class="form-control">
+            <div class="foodCategory">
+                <h1>Food Category:</h1><br/>
+                <input type="radio" id="burger" name="foodCategory" value="burger">
+                <label for="burger">Burger</label><br/>
+                <input type="radio" id="pizza" name="foodCategory" value="Pizza">
+                <label for="pizza">Pizza</label><br/>
+                <input type="radio" id="bev" name="foodCategory" value="coffee">
+                <label for="bev">Coffee</label><br/>
+                <input type="radio" id="pasta" name="foodCategory" value="pasta">
+                <label for="pasta">Pasta</label>
+            </div>
+            <div class="foodType">
+                <h1>Food Type:</h1><br/>
+                <input type="radio" id="all" name="foodType" value="all">
+                <label for="all">All</label><br/>
+                <input type="radio" id="veg" name="foodType" value="veg">
+                <label for="veg">Vegetarian</label><br/>
+                <input type="radio" id="nonveg" name="foodType" value="nonveg">
+                <label for="nonveg">Non-Vegetarian</label><br/>
+                <input type="radio" id="seasonal" name="foodType" value="seasonal">
+                <label for="seasonal">Seasonal</label>
+            </div>
+        </div>
+        <div class="menucard">
+            <div class="card">
+                <img src="https://via.placeholder.com/300" alt="Food">
+                <div class="card-content">
+                    <h2>Food Name</h2>
+                    <p class="price">$10</p>
+                    <p>Description of the food goes here...</p>
+                    <div class="quantity-control">
+                        <button class="quantity-btn minus">-</button>
+                        <span class="quantity">0</span>
+                        <button class="quantity-btn plus">+</button>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://via.placeholder.com/300" alt="Food">
+                <div class="card-content">
+                    <h2>Food Name</h2>
+                    <p class="price">$10</p>
+                    <p>Description of the food goes here...</p>
+                    <div class="quantity-control">
+                        <button class="quantity-btn minus">-</button>
+                        <span class="quantity">0</span>
+                        <button class="quantity-btn plus">+</button>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://via.placeholder.com/300" alt="Food">
+                <div class="card-content">
+                    <h2>Food Name</h2>
+                    <p class="price">$10</p>
+                    <p>Description of the food goes here...</p>
+                    <div class="quantity-control">
+                        <button class="quantity-btn minus">-</button>
+                        <span class="quantity">0</span>
+                        <button class="quantity-btn plus">+</button>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+        </div><div class="menucard">
+        <div class="card">
+            <img src="../static/images/bur.jpg" alt="Food">
+            <div class="card-content">
+                <h2>Food Name</h2>
+                <p class="price">$10</p>
+                <p>Description of the food goes here...</p>
+                <div class="quantity-control">
+                    <button class="quantity-btn minus">-</button>
+                    <span class="quantity">0</span>
+                    <button class="quantity-btn plus">+</button>
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300" alt="Food">
+            <div class="card-content">
+                <h2>Food Name</h2>
+                <p class="price">$10</p>
+                <p>Description of the food goes here...</p>
+                <div class="quantity-control">
+                    <button class="quantity-btn minus">-</button>
+                    <span class="quantity">0</span>
+                    <button class="quantity-btn plus">+</button>
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300" alt="Food">
+            <div class="card-content">
+                <h2>Food Name</h2>
+                <p class="price">$10</p>
+                <p>Description of the food goes here...</p>
+                <div class="quantity-control">
+                    <button class="quantity-btn minus">-</button>
+                    <span class="quantity">0</span>
+                    <button type="button" class="quantity-btn plus">+</button>
+                    <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+</div>
+
+
+<script th:inline="javascript">
+    const categories = ['Burger', 'Pizza', 'Coffee', 'Pasta'];
+    const foodTypes = [{label:"All", value:"all"},{label: "Vegetarian",value: "veg"},{label: "Non-Vegetarian",value: "nonveg"},
+        {label: "Seasonal",value: "seasonal"}];
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const quantityControls = document.querySelectorAll(".quantity-control");
+
+        quantityControls.forEach(function(quantityControl) {
+            const minusButton = quantityControl.querySelector(".minus");
+            const plusButton = quantityControl.querySelector(".plus");
+            const quantityDisplay = quantityControl.querySelector(".quantity");
+            const addToCartBtn = quantityControl.querySelector(".add-to-cart-btn");
+
+            // Decrease quantity when minus button is clicked
+            minusButton.addEventListener("click", function() {
+                let quantity = parseInt(quantityDisplay.textContent);
+                if (quantity > 1) {
+                    quantity--;
+                    quantityDisplay.textContent = quantity;
+                }
+            });
+
+            // Increase quantity when plus button is clicked
+            plusButton.addEventListener("click", function() {
+                let quantity = parseInt(quantityDisplay.textContent);
+                quantity++;
+                quantityDisplay.textContent = quantity;
+            });
+
+            // Add item to cart and set quantity to zero when Add to Cart button is clicked
+            addToCartBtn.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent default form submission behavior
+                let quantity = parseInt(quantityDisplay.textContent);
+                if (quantity === 0) {
+                    alert("No item selected!");
+                } else {
+                    // Add item to cart logic goes here
+                    // For now, just log the quantity to console and set it to zero
+                    console.log("Item added to cart with quantity: " + quantity);
+                    quantityDisplay.textContent = 0;
+                }
+            });
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

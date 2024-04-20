@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - Zoggy Foods</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .navbar {
+            background-color: black;
+            color: white;
+            padding: 20px; /* Add padding to increase horizontal length */
+            width: 98%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            position: fixed; /* Position the navbar at the top */
+            top: 0; /* Align the navbar to the top */
+            left: 0; /* Align the navbar to the left */
+            z-index: 1000; /* Ensure the navbar is above other content */
+        }
+
+        .navbar img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .nav-links {
+            margin-left: auto;
+        }
+
+        .nav-links .nav-link {
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            background-color: black;
+            color: white;
+            width: 200px;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            z-index: 1000;
+            padding-top: 70px;
+            top:10%;
+        }
+
+        .sidebar h3 {
+            margin: 0;
+            padding: 10px;
+        }
+
+        .nav-links {
+            padding: 0;
+        }
+
+        .side-link {
+            display: block; /* Ensures each link takes up the full width */
+            padding: 10px;
+            border-bottom: 1px solid #555;
+            text-decoration: none; /* Removes underline */
+            color: white; /* Sets link color to white */
+        }
+
+        .side-link:hover {
+            background-color: #555;
+        }
+
+        .content {
+            margin-left: 220px; /* Adjust based on the width of the sidebar */
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        .order {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            width: 600px
+        }
+
+        .order-card {
+
+            border-radius: 5px;
+            width: 300px;
+            padding: 10px;
+            margin: 0 20px;
+            display: flex;
+        }
+
+
+        .order-img img {
+            width: 100%;
+            border-radius: 5px;
+            position: relative;
+            right:80%
+        }
+
+        .order-content {
+            padding: 10px 0;
+
+        }
+
+        .order-content h3 {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+
+        .order-status  {
+            margin: 0;
+            font-size: 20px;
+            color: green;
+            position: relative;
+            right: -20%;
+            top:20%
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="navbar">
+        <h3>Zoggy Foods</h3>
+        <div class="nav-links">
+            <span class="nav-link">Profile</span>
+            <span class="nav-link">Cart</span>
+            <span class="nav-link">Search</span>
+        </div>
+    </div>
+
+    <<div class="content">
+    <div class="sidebar">
+        <table class="side-links">
+            <tr>
+                <td><a class="side-link" href="order.html">Orders</a></td>
+            </tr>
+            <tr>
+                <td><a class="side-link" href="favorite.html">Favorites</a></td>
+            </tr>
+            <tr>
+                <td><a class="side-link" href="#">Payments</a></td>
+            </tr>
+            <tr>
+                <td><a class="side-link" href="address.html">Address</a></td>
+            </tr>
+            <tr>
+                <td><a class="side-link" href="#">LogOut</a></td>
+            </tr>
+        </table>
+    </div>
+    <h2>My Orders</h2>
+    <div class="order">
+        <div class="order-card">
+            <div class="order-img">
+                <img src="../static/images/bur.jpg">
+            </div>
+            <div class="order-content">
+                <h3>BIRIYANI</h3>
+                <h3>$23</h3>
+            </div>
+            <div class="order-status">
+                <h2>Delivered</h2>
+            </div>
+        </div>
+    </div>
+    <div class="order">
+        <div class="order-card">
+            <div class="order-img">
+                <img src="../static/images/bur.jpg">
+            </div>
+            <div class="order-content">
+                <h3>BIRIYANI</h3>
+                <h3>$23</h3>
+            </div>
+            <div class="order-status">
+                <h2>Delivered</h2>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

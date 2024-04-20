@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Address - Zoggy Foods</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+      padding-top: 50px;
+    }
+
+    .navbar {
+      background-color: black;
+      color: white;
+      padding: 20px; /* Add padding to increase horizontal length */
+      width: 98%;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      position: fixed; /* Position the navbar at the top */
+      top: 0; /* Align the navbar to the top */
+      left: 0; /* Align the navbar to the left */
+      z-index: 1000; /* Ensure the navbar is above other content */
+    }
+
+    .navbar img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .nav-links {
+      margin-left: auto;
+    }
+
+    .nav-links .nav-link {
+      margin-left: 20px;
+      cursor: pointer;
+    }
+
+    .sidebar {
+      background-color: black;
+      color: white;
+      width: 200px;
+      height: 100%;
+      position: fixed;
+      left: 0;
+      z-index: 1000;
+      padding-top: 70px;
+      top:10%;
+    }
+
+    .sidebar h3 {
+      margin: 0;
+      padding: 10px;
+    }
+
+    .nav-links {
+      padding: 0;
+    }
+
+    .side-link {
+      display: block; /* Ensures each link takes up the full width */
+      padding: 10px;
+      border-bottom: 1px solid #555;
+      text-decoration: none; /* Removes underline */
+      color: white; /* Sets link color to white */
+    }
+
+    .side-link:hover {
+      background-color: #555;
+    }
+
+    .content {
+      margin-left: 220px; /* Adjust based on the width of the sidebar */
+      padding: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #333;
+      color: white;
+    }
+    .address{
+      display: flex;
+      margin-left: 20px;
+    }
+
+    .address-card{
+      position: relative;
+      top:60px;
+      left:10%;
+      justify-content: space-between;
+      border: #333333 solid 2px;
+      height: max-content;
+      width: 200px;
+      margin-right: 20px;
+      padding: 10px;
+    }
+
+    .address-card button[type="submit"] {
+      background-color: transparent;
+      border: 2px solid #333333;
+      color: #333333;
+      padding: 8px 15px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+
+    }
+
+    .address-card button[type="submit"]:hover {
+      background-color: #333333;
+      color: #ffffff;
+    }
+
+
+
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="navbar">
+    <h3>Zoggy Foods</h3>
+    <div class="nav-links">
+      <span class="nav-link">Profile</span>
+      <span class="nav-link">Cart</span>
+      <span class="nav-link">Search</span>
+    </div>
+  </div>
+  <<div class="content">
+  <div class="sidebar">
+    <table class="side-links">
+      <tr>
+        <td><a class="side-link" href="order.html">Orders</a></td>
+      </tr>
+      <tr>
+        <td><a class="side-link" href="favorite.html">Favorites</a></td>
+      </tr>
+      <tr>
+        <td><a class="side-link" href="#">Payments</a></td>
+      </tr>
+      <tr>
+        <td><a class="side-link" href="address.html">Address</a></td>
+      </tr>
+      <tr>
+        <td><a class="side-link" href="#">LogOut</a></td>
+      </tr>
+    </table>
+  </div>
+  <h2>Addresses</h2>
+  <div class="address">
+    <div class="address-card">
+      <h2>Home</h2>
+      <div>
+        Street: 123 Main St<br>
+        City: New York<br>
+        State: New York<br>
+        Pincode: 10001<br>
+      </div></br>
+      <button type="submit">Select</button>
+    </div>
+
+    <div class="address-card">
+      <h2>Home</h2>
+      <div>
+        Street: 123 Main St<br>
+        City: New York<br>
+        State: New York<br>
+        Pincode: 10001<br>
+      </div></br>
+      <button type="submit">Select</button>
+    </div>
+</div>
+
+</div>
+
+</body>
+</html>

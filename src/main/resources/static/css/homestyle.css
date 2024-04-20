@@ -1,0 +1,163 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.background {
+    /* Set the background image */
+    background-image: url('../images/Home.jpg'); /* Adjust the path based on your project structure */
+    position: relative;
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Do not repeat the background image */
+    height: 100vh;
+
+    padding-bottom: 50px;
+}
+
+.background::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha value for the desired opacity */
+}
+
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.navbar {
+    background-color: black;
+    color: white;
+    padding: 20px; /* Add padding to increase horizontal length */
+    width: 98%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    position: fixed; /* Position the navbar at the top */
+    top: 0; /* Align the navbar to the top */
+    left: 0; /* Align the navbar to the left */
+    z-index: 1000; /* Ensure the navbar is above other content */
+}
+
+.navbar img {
+    width: 50px;
+    height: 50px;
+}
+
+.nav-links {
+    margin-left: auto;
+}
+
+.nav-links .nav-link {
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+
+
+.main-content {
+    padding: 10px;
+    text-align: center; /* Center align the content */
+    position: absolute; /* Position the content absolutely */
+    top: 40%; /* Move the content 50% down from the top */
+    left: 50%; /* Move the content 50% from the left */
+    transform: translate(-50%, -50%); /* Translate the content back by half its width and height */
+}
+
+.main-content h2 {
+    font-size: 80px; /* Increase font size for the heading */
+    margin-bottom: 20px; /* Add some spacing below the heading */
+    color: white;
+}
+
+.main-content p {
+    font-size: 50px; /* Decrease font size for the paragraph */
+    margin-bottom: 20px; /* Add some spacing below the paragraph */
+    padding: 10px;
+    color: white;
+}
+
+.footer {
+    position: relative;
+    margin-top: 20px; /* Add some space between the main content and the footer */
+}
+
+.top-restaurants {
+    display: flex;
+    flex-wrap: wrap; /* Allow restaurants to wrap to the next line */
+    justify-content: space-between; /* Distribute restaurants evenly */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 98%;
+    backdrop-filter: blur(8px); /* Add blur effect */
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    color: black;
+    border: black solid 3px;
+}
+
+.top-restaurants h3 {
+    position: absolute;
+    top: -20px; /* Adjust as needed */
+    left: 20px;
+    padding: 10px;
+}
+
+
+.restaurant-card {
+    width: calc(22% - 10px); /* Adjust width dynamically to fit four cards in one line */
+    margin-bottom: 5px; /* Adjust margin as needed */
+    margin-right: 5px; /* Adjust margin as needed */
+    margin-top: 20px;
+    padding: 10px;
+}
+
+
+
+
+.restaurant-card img {
+    width: 30%;
+    height: auto;
+}
+
+
+
+.restaurant-list {
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center the restaurant items horizontally */
+    align-items: center; /* Center the restaurant items vertically */
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
+}
+
+.restaurant {
+    margin: 0 20px; /* Add spacing between restaurant items */
+    text-align: center; /* Center the text within each restaurant item */
+}
+
+.restaurant-card img {
+    width: 98%; /* Ensure the image fills the container */
+    height: 200px; /* Set a fixed height for all images */
+    object-fit: cover; /* Ensure the image covers the entire container */
+}
+
+.restaurant-card .restaurant-header .heart-icon {
+    width: 50px; /* Adjust the width as needed */
+    height: 50px; /* Adjust the height as needed */
+    margin-left: 200px;
+}
+.restaurant-card .restaurant-header {
+    display: flex; /* Use flexbox layout */
+    align-items: center; /* Align items vertically */
+}

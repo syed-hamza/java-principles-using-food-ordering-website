@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Zoggy Foods</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .navbar {
+            background-color: black;
+            color: white;
+            padding: 20px; /* Add padding to increase horizontal length */
+            width: 98%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            position: fixed; /* Position the navbar at the top */
+            top: 0; /* Align the navbar to the top */
+            left: 0; /* Align the navbar to the left */
+            z-index: 1000; /* Ensure the navbar is above other content */
+        }
+
+        .navbar img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .nav-links {
+            margin-left: auto;
+        }
+
+        .nav-links .nav-link {
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            background-color: black;
+            color: white;
+            width: 200px;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            z-index: 1000;
+            padding-top: 70px;
+            top:10%;
+        }
+
+        .sidebar h3 {
+            margin: 0;
+            padding: 10px;
+        }
+
+        .nav-links {
+            padding: 0;
+        }
+
+        .side-link {
+            display: block; /* Ensures each link takes up the full width */
+            padding: 10px;
+            border-bottom: 1px solid #555;
+            text-decoration: none; /* Removes underline */
+            color: white; /* Sets link color to white */
+        }
+
+        .side-link:hover {
+            background-color: #555;
+        }
+
+        .content {
+            margin-left: 220px; /* Adjust based on the width of the sidebar */
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        .profile{
+            position: relative;
+            top:100px;
+        }
+        .logout-btn {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .logout-btn:hover {
+            background-color: #333333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="navbar">
+        <h3>Zoggy Foods</h3>
+        <div class="nav-links">
+            <a href="profile.html" class="nav-link">Profile</a>
+            <a href="cart.html" class="nav-link">Cart</a>
+            <span class="nav-link">Search</span>
+        </div>
+    </div>
+
+    <<div class="content">
+    <div class="sidebar">
+        <table class="side-links">
+            <tr>
+                <td><a class="side-link" href="order.html">Orders</a></td>
+            </tr>
+            <tr>
+                <td><a class="side-link" href="favorite.html">Favorites</a></td>
+            </tr>
+            <tr>
+                <td><a class="side-link" href="#">Payments</a></td>
+            </tr>
+            <tr>
+                <td><a class="side-link" href="address.html">Address</a></td>
+            </tr>
+            <tr>
+                <td><a class="side-link" href="#">LogOut</a></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="profile">
+            <img src="../static/images/profile.svg" alt="Profile Icon" width="200" height="200">
+            <div>
+                <p><span th:text="${user.name}">Syed Hamza Hussain</span></p>
+                <p>Email: <span th:text="${user.email}">Hamaza112233@gmail.com</span></p>
+            </div>
+            <form th:action="@{/logout}" method="post">
+                <button class="logout-btn" type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
