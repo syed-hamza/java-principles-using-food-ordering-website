@@ -211,6 +211,21 @@
             padding: 8px;
         }
 
+        #payButton {
+            background-color: #008cba;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        #payButton:hover {
+            background-color: #005f70;
+        }
 
     </style>
 </head>
@@ -280,6 +295,8 @@
             </tr>
             </tbody>
         </table>
+        <button id="payButton" onclick="redirectToPay()">Pay Here</button>
+
     </div>
 </div>
         <div class="address">
@@ -413,6 +430,10 @@
         event.preventDefault(); // Prevent default form submission behavior
         addAddress(); // Call addAddress function to send data to the endpoint
     });
+
+    function redirectToPay() {
+        window.location.href = "payment.html";
+    }
 
 </script>
 
