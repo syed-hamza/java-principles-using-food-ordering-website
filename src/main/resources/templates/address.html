@@ -167,7 +167,10 @@
         <td><a class="side-link" href="address.html">Address</a></td>
       </tr>
       <tr>
-        <td><a class="side-link" href="#">LogOut</a></td>
+        <td><a class="side-link"><button onclick="function logout() {
+            localStorage.setItem('Authorization',null);
+        }
+        logout()">LogOut</button></a></td>
       </tr>
     </table>
   </div>

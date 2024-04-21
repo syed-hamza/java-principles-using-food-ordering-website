@@ -7,9 +7,11 @@ import java.util.List;
 public interface AddressService {
     public abstract void addAddress(AddAddressRequest req, Long user);
 
-    public Address removeAddress(Long AddressID, String jwt)throws Exception;
+//    public Address removeAddress(Long AddressID, String jwt)throws Exception;
 
     public Address clearAddress(Long userId,String jwt)throws Exception;
 
     public List<Address> getAddressByUserId(User user);
+
+    public abstract void deleteAddress(String pincode,Long id);
 }

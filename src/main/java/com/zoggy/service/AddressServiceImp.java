@@ -6,6 +6,7 @@ import com.zoggy.request.AddAddressRequest;
 import com.zoggy.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ public class AddressServiceImp implements AddressService {
     private AddressRepository addressRepository;
 
     @Override
+    @Transactional
     public void addAddress(AddAddressRequest req, Long userId){
         Address address = new Address();
         address.setStreet(req.getStreet());
@@ -28,14 +30,14 @@ public class AddressServiceImp implements AddressService {
     }
 
     @Override
-    public Address removeAddress(Long addressId, String jwt) throws Exception {
-        Optional<Address> optionalAddress = addressRepository.findById(addressId);
-        if (optionalAddress.isPresent()) {
-            Address address = optionalAddress.get();
-            addressRepository.delete(address);
-            return address;
+    public void deleteAddress(String pincode, Long id){
+        System.out.println("pre sql delete");
+        System.out.println(pincode);
+        System.out.println(id);
+        Optional<Address> addr = addressRepository.findByPincode(pincode);
+        if(addr.isPresent()){
+            addressRepository.delete(addr.get());
         }
-        return null;
     }
 
     @Override

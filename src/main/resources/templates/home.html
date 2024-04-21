@@ -15,6 +15,11 @@
             <div class="nav-links">
                 <span class="nav-link">Profile</span>
                 <a href="cart"><span  class="nav-link">Cart</span></a>
+                <a class="side-link"><button onclick="function logout() {
+                localStorage.setItem('Authorization',null);
+                window.location.href = '/login';
+                }
+                logout()">LogOut</button></a>
                 <span class="nav-link">Search</span>
             </div>
         </div>

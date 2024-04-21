@@ -5,6 +5,7 @@ import com.zoggy.model.CartItem;
 import com.zoggy.model.User;
 import com.zoggy.request.AddAddressRequest;
 import com.zoggy.request.AddCartItemRequest;
+import com.zoggy.request.DeleteAddressRequest;
 import com.zoggy.request.UpdateCartItemRequest;
 import com.zoggy.service.CartService;
 import com.zoggy.service.AddressService;
@@ -29,6 +30,19 @@ public class CartController {
     @Autowired
     private AddressService addressService;
 
+    @DeleteMapping("/delete-address")
+    public ResponseEntity<?> deleteAddress(@RequestBody DeleteAddressRequest address, @RequestHeader("Authorization") String jwt) {
+        try {
+
+            User user = userService.findUserByJwtToken(jwt);
+            addressService.deleteAddress(address.getPincode(),user.getId());
+
+            return ResponseEntity.status(HttpStatus.CREATED).body("Address added successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while adding address");
+        }
+    }
+
     @GetMapping("/cart-address")
     public ResponseEntity<?> getCartAddresses(@RequestHeader("Authorization") String jwt) {
         try {
@@ -42,6 +56,21 @@ public class CartController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while fetching addresses");
         }
     }
+
+    @GetMapping("/get-items")
+    public ResponseEntity<?> getCartItems(@RequestHeader("Authorization") String jwt) {
+        try {
+            User user = userService.findUserByJwtToken(jwt);
+            if(user==null){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No account");
+            }
+            Cart cart = cartService.findCartByUserId(user.getId());
+            return ResponseEntity.ok().body(cart);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while fetching addresses");
+        }
+    }
+
     @PostMapping("/add-address")
     public ResponseEntity<?> addAddress(@RequestBody AddAddressRequest address, @RequestHeader("Authorization") String jwt) {
         try {

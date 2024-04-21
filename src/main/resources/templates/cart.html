@@ -222,6 +222,11 @@
         <div class="nav-links">
             <a href="profile.html" class="nav-link">Profile</a>
             <a href="cart.html" class="nav-link">Cart</a>
+            <a class="side-link"><button onclick="function logout() {
+            localStorage.setItem('Authorization',null);
+            window.location.href = '/login';
+            }
+            logout()">LogOut</button></a>
             <span class="nav-link">Search</span>
         </div>
     </div>
@@ -229,15 +234,13 @@
     <div class="cartpage">
     <div class="cart">
         <div class="cart-img">
-<!--            <img th:src="@{/static/images/bur.jpg}">-->
+            <img th:src="@{/static/images/bur.jpg}">
         </div>
         <div class="cart-content">
             <h3 th:text="${foodName}">Food Name</h3>
             <div class="quantity-control">
-                <button class="quantity-btn minus">-</button>
                 <span class="quantity">0</span>
-                <button class="quantity-btn plus">+</button>
-                <button class="add-to-cart-btn">Add to Cart</button>
+                <button class="add-to-cart-btn">Remove from Cart</button>
             </div></br>
             <h3>Total</h3>
         </div>
@@ -249,10 +252,8 @@
         <div class="cart-content">
             <h3 th:text="${foodName}">Food Name</h3>
             <div class="quantity-control">
-                <button class="quantity-btn minus">-</button>
                 <span class="quantity">0</span>
-                <button class="quantity-btn plus">+</button>
-                <button class="add-to-cart-btn">Add to Cart</button>
+                <button class="add-to-cart-btn">Remove from Cart</button>
             </div></br>
             <h3>Total</h3>
         </div>
@@ -314,6 +315,56 @@
 </div>
 <script>
     console.log(localStorage.getItem("Authorization"))
+    function item_body(foodName,total,amt){
+        return `<div class="cart">
+        <div class="cart-img">
+            <img th:src="@{/static/images/bur.jpg}">
+        </div>
+        <div class="cart-content">
+            <h3 th:text="${foodName}">${foodName}</h3>
+            <div class="quantity-control">
+                <span class="quantity">${amt}</span>
+                <button class="add-to-cart-btn">Remove from Cart</button>
+            </div></br>
+            <h3>Total:${total}</h3>
+        </div>
+    </div>`
+    }
+    fetch("/get-items", {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem("Authorization")}`
+        },
+    })
+        .then(response => {
+            if(response.status == 401){
+                alert("Please login");
+                window.location.href = "/login";
+            }
+            if (!response.ok) {
+                return response.text().then(errorMessage => {
+                    throw new Error(errorMessage);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Items:", data);
+            const placeholder = document.getElementById("addressPlaceholder");
+            let out = '';
+            data = data["items"]
+            for(let i in data) {
+                const item = data[i];
+                out += item_body(item["foodName"],item["totalPrice"],item["quantity"])
+            }
+            placeholder.innerHTML = out;
+        }).then(data=>{addevnl()})
+        .catch(error => {
+            console.error("Error occurred:", error.message);
+            alert(error.message); // Display error message in an alert
+        });
+
     fetch("/cart-address", {
         method: "GET",
         headers: {
@@ -340,7 +391,7 @@
             for(let i in data) {
                 const addr = data[i];
                 out += `
-            <div class="address-card">
+            <div class="address-card" id = ${addr.pincode}>
                 <h2>Home</h2>
                 <div>
                     Street: ${addr.street}<br>
@@ -349,10 +400,11 @@
                     Pincode: ${addr.pincode}<br>
                 </div>
                 <button type="submit">Select</button>
+                <button class="delete">Delete</button>
             </div>`;
             }
             placeholder.innerHTML = out;
-        })
+        }).then(data=>{addevnl()})
         .catch(error => {
             console.error("Error occurred:", error.message);
             alert(error.message); // Display error message in an alert
@@ -399,6 +451,7 @@
             .then(response => {
                 if (response.ok) {
                     console.log('Address added successfully');
+                    location.reload();
                 } else {
                     throw new Error('Failed to add address');
                 }
@@ -406,6 +459,7 @@
             .catch(error => {
                 console.error('Error:', error);
             });
+
     }
 
     // Call addAddress function when the form is submitted
@@ -413,6 +467,42 @@
         event.preventDefault(); // Prevent default form submission behavior
         addAddress(); // Call addAddress function to send data to the endpoint
     });
+    function deleteAddressCard(addressCard) {
+        addressCard.parentNode.removeChild(addressCard);
+    }
+    function addevnl() {
+        // Add event listener to all delete buttons
+        const jwtToken = localStorage.getItem("Authorization");
+        const deleteButtons = document.querySelectorAll('.address-card button.delete');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const addressCard = this.parentNode;
+
+                deleteOnServer(this.parentNode.id,jwtToken);
+                deleteAddressCard(addressCard);
+            });
+        });
+    };
+    function deleteOnServer(id){
+        const jwtToken = localStorage.getItem("Authorization");
+        fetch('/delete-address', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            },
+            body: JSON.stringify({'pincode': id})
+        }).then(response => {
+            if (response.ok) {
+                console.log('Address deleted successfully');
+            } else {
+                throw new Error('Failed to delete address');
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
 
 </script>
 
