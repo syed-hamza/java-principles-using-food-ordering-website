@@ -126,8 +126,8 @@
     <div class="navbar">
         <h3>Zoggy Foods</h3>
         <div class="nav-links">
-            <a href="profile.html" class="nav-link">Profile</a>
-            <a href="cart.html" class="nav-link">Cart</a>
+            <a href="/profile" class="nav-link">Profile</a>
+            <a href="/cart" class="nav-link">Cart</a>
             <span class="nav-link">Search</span>
         </div>
     </div>
@@ -136,19 +136,13 @@
     <div class="sidebar">
         <table class="side-links">
             <tr>
-                <td><a class="side-link" href="order.html">Orders</a></td>
+                <td><a class="side-link" href="/order">Orders</a></td>
             </tr>
             <tr>
-                <td><a class="side-link" href="favorite.html">Favorites</a></td>
+                <td><a class="side-link" href="/favorite">Favorites</a></td>
             </tr>
             <tr>
-                <td><a class="side-link" href="#">Payments</a></td>
-            </tr>
-            <tr>
-                <td><a class="side-link" href="address.html">Address</a></td>
-            </tr>
-            <tr>
-                <td><a class="side-link" href="#">LogOut</a></td>
+                <td><a class="side-link" href="/address">Addresses</a></td>
             </tr>
         </table>
     </div>
@@ -157,8 +151,8 @@
     <div class="profile">
             <img src="../static/images/profile.svg" alt="Profile Icon" width="200" height="200">
             <div>
-                <p><span th:text="${user.name}">Syed Hamza Hussain</span></p>
-                <p>Email: <span th:text="${user.email}">Hamaza112233@gmail.com</span></p>
+                <p><span>Syed Hamza Hussain</span></p>
+                <p>Email: <span>Hamaza112233@gmail.com</span></p>
             </div>
             <form th:action="@{/logout}" method="post">
                 <button class="logout-btn" type="submit">Logout</button>

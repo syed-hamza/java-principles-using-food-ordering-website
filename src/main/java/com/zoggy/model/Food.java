@@ -16,29 +16,79 @@ public class Food {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+    private int id;
     private String name;
+    private String type;
+    private String category;
+    private double price;
     private String description;
-    private Long price;
-
+    private Date createdAt;
+    private String imageFilename;
     @ManyToOne
-    private Category foodCategory;
-
-    @Column(length = 1000)
-    @ElementCollection
-    private List<String> images;
-
-    private boolean available;
-
-    @ManyToOne
+    @JoinColumn(name = "restaurant_id") // Assuming the column name in the food table
     private Restaurant restaurant;
 
-    private boolean isVegetarian;
-    private boolean isSeasonal;
+    public int getId() {
+        return id;
+    }
 
-    @ManyToMany
-    private List<IngredientsItem> ingredients = new ArrayList<>();
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    private Date creationDate;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getImageFilename() {
+        return imageFilename;
+    }
+
+    public void setImageFilename(String imageFilename) {
+        this.imageFilename = imageFilename;
+    }
 }

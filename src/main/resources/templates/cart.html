@@ -235,8 +235,8 @@
     <div class="navbar">
         <h3>Zoggy Foods</h3>
         <div class="nav-links">
-            <a href="profile.html" class="nav-link">Profile</a>
-            <a href="cart.html" class="nav-link">Cart</a>
+            <a href="/profile" class="nav-link">Profile</a>
+            <a href="/cart" class="nav-link">Cart</a>
             <a class="side-link"><button onclick="function logout() {
             localStorage.setItem('Authorization',null);
             window.location.href = '/login';
@@ -382,33 +382,47 @@
             alert(error.message); // Display error message in an alert
         });
 
-    fetch("/cart-address", {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem("Authorization")}`
-        },
-    })
-        .then(response => {
-            if(response.status == 401){
-                alert("Please login");
-                window.location.href = "/login";
-            }
-            if (!response.ok) {
-                return response.text().then(errorMessage => {
-                    throw new Error(errorMessage);
-                });
-            }
-            return response.json();
+    window.addEventListener('load', function() {
+        fetchAddresses();
+    });
+
+    function fetchAddresses() {
+        const jwtToken = localStorage.getItem("Authorization");
+        fetch("/cart-address", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            },
         })
-        .then(data => {
-            console.log("Addresses:", data);
-            const placeholder = document.getElementById("addressPlaceholder");
-            let out = '';
-            for(let i in data) {
-                const addr = data[i];
-                out += `
-            <div class="address-card" id = ${addr.pincode}>
+            .then(response => {
+                if(response.status === 401) {
+                    alert("Please login");
+                    window.location.href = "/login";
+                }
+                if (!response.ok) {
+                    throw new Error("Failed to fetch addresses");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Addresses:", data);
+                renderAddresses(data);
+            })
+            .catch(error => {
+                console.error("Error occurred:", error.message);
+                // Handle the error gracefully, e.g., display a message to the user
+                // alert("Failed to fetch addresses. Please try again later.");
+            });
+    }
+
+    function renderAddresses(addressesData) {
+        const placeholder = document.getElementById("addressPlaceholder");
+        let out = '';
+        for(let i in addressesData) {
+            const addr = addressesData[i];
+            out += `
+            <div class="address-card" id = "${addr.pincode}">
                 <h2>Home</h2>
                 <div>
                     Street: ${addr.street}<br>
@@ -419,14 +433,44 @@
                 <button type="submit">Select</button>
                 <button class="delete">Delete</button>
             </div>`;
-            }
-            placeholder.innerHTML = out;
-        }).then(data=>{addevnl()})
-        .catch(error => {
-            console.error("Error occurred:", error.message);
-            alert(error.message); // Display error message in an alert
+        }
+        placeholder.innerHTML = out;
+        addEventListenersToDeleteButtons();
+    }
+    function addEventListenersToDeleteButtons() {
+        const deleteButtons = document.querySelectorAll('.address-card button.delete');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const addressCard = this.parentNode;
+                deleteAddress(addressCard.id);
+            });
         });
+    }
 
+    function deleteAddress(pincode) {
+        const jwtToken = localStorage.getItem("Authorization");
+        fetch('/delete-address', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            },
+            body: JSON.stringify({'pincode': pincode})
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Address deleted successfully');
+                    fetchAddresses(); // Fetch and render addresses again after deletion
+                } else {
+                    throw new Error('Failed to delete address');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle the error gracefully, e.g., display a message to the user
+                // alert("Failed to delete address. Please try again later.");
+            });
+    }
 
     document.getElementById('addAddressBtn').addEventListener('click', function() {
         var form = document.getElementById('addressForm');
@@ -468,7 +512,9 @@
             .then(response => {
                 if (response.ok) {
                     console.log('Address added successfully');
-                    location.reload();
+                    setTimeout(function(){
+                        location.reload();
+                    }, 1000);
                 } else {
                     throw new Error('Failed to add address');
                 }
@@ -499,7 +545,7 @@
                 deleteAddressCard(addressCard);
             });
         });
-    };
+    }
     function deleteOnServer(id){
         const jwtToken = localStorage.getItem("Authorization");
         fetch('/delete-address', {
@@ -522,7 +568,8 @@
 
 
     function redirectToPay() {
-        window.location.href = "payment.html";
+
+        window.location.href = "/";
     }
 
 </script>

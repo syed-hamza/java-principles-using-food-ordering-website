@@ -309,11 +309,59 @@
 
 
 <script th:inline="javascript">
+    console.log(localStorage.getItem("Authorization"));
     const categories = ['Burger', 'Pizza', 'Coffee', 'Pasta'];
     const foodTypes = [{label:"All", value:"all"},{label: "Vegetarian",value: "veg"},{label: "Non-Vegetarian",value: "nonveg"},
         {label: "Seasonal",value: "seasonal"}];
 
     document.addEventListener("DOMContentLoaded", function() {
+        function fetchFood() {
+            const jwtToken = localStorage.getItem("Authorization");
+            fetch("get-food", {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${jwtToken}`
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Failed to fetch addresses");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("items:", data);
+                })
+                .catch(error => {
+                    console.error("Error occurred:", error.message);
+                });
+        }
+
+        function renderAddresses(addressesData) {
+            const placeholder = document.getElementById("addressPlaceholder");
+            let out = '';
+            for(let i in addressesData) {
+                const addr = addressesData[i];
+                out += `
+            <div class="address-card" id = "${addr.pincode}">
+                <h2>Home</h2>
+                <div>
+                    Street: ${addr.street}<br>
+                    City: ${addr.cityName}<br>
+                    State: ${addr.state}<br>
+                    Pincode: ${addr.pincode}<br>
+                </div>
+                <button type="submit">Select</button>
+                <button class="delete">Delete</button>
+            </div>`;
+            }
+            placeholder.innerHTML = out;
+            addEventListenersToDeleteButtons();
+        }
+        fetchFood();
+
+
         const quantityControls = document.querySelectorAll(".quantity-control");
 
         quantityControls.forEach(function(quantityControl) {

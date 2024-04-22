@@ -30,5 +30,5 @@ public class CartItem {
     @ElementCollection
     private List<String> ingredients;
 
-    private Long totalPrice;
+    private double totalPrice;
 }

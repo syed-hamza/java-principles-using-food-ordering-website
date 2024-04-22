@@ -6,7 +6,6 @@ import com.zoggy.model.Food;
 import com.zoggy.model.User;
 import com.zoggy.repository.CartItemRepository;
 import com.zoggy.repository.CartRepository;
-import com.zoggy.repository.FoodRepository;
 import com.zoggy.request.AddCartItemRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,8 +86,8 @@ public class CartServiceImp implements CartService{
     }
 
     @Override
-    public Long calculateCartTotals(Cart cart) throws Exception {
-        Long total=0L;
+    public double calculateCartTotals(Cart cart) throws Exception {
+        double total=0L;
 
         for(CartItem cartItem :cart.getItems()){
             total+=cartItem.getFood().getPrice()*cartItem.getQuantity();

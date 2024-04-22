@@ -69,7 +69,7 @@ public class OrderServiceImp implements OrderService{
             orderItems.add(savedOrderItem);
         }
 
-        Long totalPrice=cartService.calculateCartTotals(cart);
+        double totalPrice=cartService.calculateCartTotals(cart);
 
         createdOrder.setItems(orderItems);
         createdOrder.setTotalPrice(totalPrice);
