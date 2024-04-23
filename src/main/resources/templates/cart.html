@@ -280,19 +280,15 @@
             <tbody>
             <tr>
                 <td>Item Total</td>
-                <td>$<span th:text="${itemTotal}">10.00</span></td>
+                <td><span id = "price"></span></td>
             </tr>
             <tr>
                 <td>Delivery Fee</td>
-                <td>$<span th:text="${deliveryFee}">10.00</span></td>
-            </tr>
-            <tr>
-                <td>GST and Restaurant charges</td>
-                <td>$<span th:text="${taxes}">10.00</span></td>
+                <td><span>5$</span></td>
             </tr>
             <tr>
                 <td>Total pay</td>
-                <td>$<span th:text="${totalPay}">10.00</span></td>
+                <td><span id = "total"></span></td>
             </tr>
             </tbody>
         </table>
@@ -367,6 +363,9 @@
             return response.json();
         })
         .then(data => {
+            var total = 0;
+            price = document.getElementById("price")
+            totalp = document.getElementById("total")
             console.log("Items:", data);
             const placeholder = document.getElementById("addressPlaceholder");
             let out = '';
@@ -374,8 +373,11 @@
             for(let i in data) {
                 const item = data[i];
                 out += item_body(item["foodName"],item["totalPrice"],item["quantity"])
+                total += item["totalPrice"]
             }
             placeholder.innerHTML = out;
+            price.textContent = total + "$"
+            totalp.textContent = total+5 + "$"
         }).then(data=>{addevnl()})
         .catch(error => {
             console.error("Error occurred:", error.message);
