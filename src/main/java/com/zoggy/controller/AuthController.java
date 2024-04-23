@@ -2,6 +2,7 @@ package com.zoggy.controller;
 
 import com.zoggy.config.JwtProvider;
 import com.zoggy.model.Cart;
+import com.zoggy.model.Food;
 import com.zoggy.model.USER_ROLE;
 import com.zoggy.model.User;
 import com.zoggy.repository.CartRepository;
@@ -22,12 +23,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import com.zoggy.service.UserService;
 
 import java.util.Collection;
+import java.util.List;
 
 
 @Controller
 public class AuthController {
+
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/login")
     public String login(Model model) {
         return "login"; // Return the name of the Thymeleaf template without the .html extension
@@ -36,6 +43,15 @@ public class AuthController {
     @GetMapping("/signup")
     public String register(Model model) {
         return "register"; // Return the name of the Thymeleaf template without the .html extension
+    }
+
+    @GetMapping("/check")
+    public ResponseEntity<?> checkauth(@RequestHeader("Authorization") String jwt) {
+        User user = userService.findUserByJwtToken(jwt);
+        if(user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Authorized");
     }
 
     @Autowired

@@ -309,6 +309,38 @@
 
 
 <script th:inline="javascript">
+    function checkAuthorization() {
+        const jwtToken = localStorage.getItem("Authorization");
+
+        fetch('/check', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            },
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    console.log('Authorization successful');
+                    // Handle success if needed
+                } else if (response.status === 401) {
+                    console.log('Authorization failed');
+                    alert("login please")
+                    window.location.href = '/login'; // Change '/login' to your actual login page URL
+                } else {
+                    console.log('Unexpected error');
+                    // Handle unexpected error if needed
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle network error if needed
+            });
+    }
+
+    // Call the function to check authorization when needed
+    checkAuthorization();
+
     console.log(localStorage.getItem("Authorization"));
     const categories = ['Burger', 'Pizza', 'Coffee', 'Pasta'];
     const foodTypes = [{label:"All", value:"all"},{label: "Vegetarian",value: "veg"},{label: "Non-Vegetarian",value: "nonveg"},

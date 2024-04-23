@@ -467,8 +467,6 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                // Handle the error gracefully, e.g., display a message to the user
-                // alert("Failed to delete address. Please try again later.");
             });
     }
 
@@ -568,9 +566,9 @@
     }
 
 
-    function redirectToPay() {
+    function redirectToLogin() {
 
-        window.location.href = "/";
+        window.location.href = "/login";
     }
 
 </script>

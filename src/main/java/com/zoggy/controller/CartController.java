@@ -35,6 +35,9 @@ public class CartController {
         try {
 
             User user = userService.findUserByJwtToken(jwt);
+            if(user==null){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No account");
+            }
             addressService.deleteAddress(id);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Address added successfully");
@@ -76,6 +79,9 @@ public class CartController {
         try {
 
             User user = userService.findUserByJwtToken(jwt);
+            if(user==null){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No account");
+            }
             addressService.addAddress(address,user.getId());
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Address added successfully");
