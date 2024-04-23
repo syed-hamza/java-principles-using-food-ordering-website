@@ -30,14 +30,17 @@ public class AddressServiceImp implements AddressService {
     }
 
     @Override
-    public void deleteAddress(String pincode, Long id){
+    public void deleteAddress(Long id){
         System.out.println("pre sql delete");
-        System.out.println(pincode);
         System.out.println(id);
-        Optional<Address> addr = addressRepository.findByPincode(pincode);
-        if(addr.isPresent()){
-            addressRepository.delete(addr.get());
+
+        Optional<Address> ad = addressRepository.findByAddressId(id);
+        System.out.println(ad.isPresent());
+        if (ad.isPresent()) {
+            Address addressToDelete = ad.get();
+            addressRepository.delete(addressToDelete);
         }
+        System.out.println("post sql delete");
     }
 
     @Override

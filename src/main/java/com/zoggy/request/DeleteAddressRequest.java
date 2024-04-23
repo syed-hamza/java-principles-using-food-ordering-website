@@ -1,18 +1,18 @@
 package com.zoggy.request;
 
 public class DeleteAddressRequest {
-    private String pincode;
+    private Long addressId;
     public DeleteAddressRequest() {
     }
 
-    public DeleteAddressRequest(String pincode) {
-        this.pincode = pincode;
+    public DeleteAddressRequest(Long addressId) {
+        this.addressId = addressId;
     }
-    public String getPincode() {
-        return pincode;
+    public Long getid() {
+        return this.addressId;
     }
 
-    public void setPincode(String pincode) {
-        this.pincode = pincode;
+    public void setid(Long addressId) {
+        this.addressId = addressId;
     }
 }

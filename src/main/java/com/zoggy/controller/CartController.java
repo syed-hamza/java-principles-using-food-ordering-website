@@ -31,11 +31,11 @@ public class CartController {
     private AddressService addressService;
 
     @DeleteMapping("/delete-address")
-    public ResponseEntity<?> deleteAddress(@RequestBody DeleteAddressRequest address, @RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<?> deleteAddress(@RequestBody Long id, @RequestHeader("Authorization") String jwt) {
         try {
 
             User user = userService.findUserByJwtToken(jwt);
-            addressService.deleteAddress(address.getPincode(),user.getId());
+            addressService.deleteAddress(id);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Address added successfully");
         } catch (Exception e) {

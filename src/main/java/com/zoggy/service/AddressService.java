@@ -13,5 +13,5 @@ public interface AddressService {
 
     public List<Address> getAddressByUserId(User user);
 
-    public abstract void deleteAddress(String pincode,Long id);
+    public abstract void deleteAddress(Long id);
 }

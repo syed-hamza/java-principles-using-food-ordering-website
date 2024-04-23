@@ -422,7 +422,7 @@
         for(let i in addressesData) {
             const addr = addressesData[i];
             out += `
-            <div class="address-card" id = "${addr.pincode}">
+            <div class="address-card" id = "${addr.addressId}">
                 <h2>Home</h2>
                 <div>
                     Street: ${addr.street}<br>
@@ -447,7 +447,7 @@
         });
     }
 
-    function deleteAddress(pincode) {
+    function deleteAddress(id) {
         const jwtToken = localStorage.getItem("Authorization");
         fetch('/delete-address', {
             method: 'DELETE',
@@ -455,7 +455,7 @@
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${jwtToken}`
             },
-            body: JSON.stringify({'pincode': pincode})
+            body: id
         })
             .then(response => {
                 if (response.ok) {
@@ -512,6 +512,7 @@
             .then(response => {
                 if (response.ok) {
                     console.log('Address added successfully');
+
                     setTimeout(function(){
                         location.reload();
                     }, 1000);
@@ -540,8 +541,8 @@
         deleteButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const addressCard = this.parentNode;
-
-                deleteOnServer(this.parentNode.id,jwtToken);
+                console.log("id:",addressCard.id)
+                deleteOnServer(addressCard.id,jwtToken);
                 deleteAddressCard(addressCard);
             });
         });
@@ -554,7 +555,7 @@
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${jwtToken}`
             },
-            body: JSON.stringify({'pincode': id})
+            body: JSON.stringify({'addressId': id})
         }).then(response => {
             if (response.ok) {
                 console.log('Address deleted successfully');
