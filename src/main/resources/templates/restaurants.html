@@ -48,24 +48,11 @@
             cursor: pointer;
         }
 
-        /* Styling for the form control container */
-        .form-control {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 20px;
-            position: absolute;
-            top: 120px; /* Adjust this value as needed */
-            left: 0;
-
-        }
-
-
-        /* Styling for food category and food type containers */
-        .foodCategory,
-        .foodType {
-            padding: 10px;
-
-        }
+       a{
+           text-decoration: none;
+           color: white;
+           padding: 10px;
+       }
 
         .form-control h1{
             padding: 10px;
@@ -180,40 +167,25 @@
 <body>
 <div class="container">
     <div class="navbar">
+        <a href="/" id="imageLink">
+            <img th:src="@{/images/burger.png}" alt="Burger Image">
+        </a>
 
-        <h3>Zoggy Foods</h3>
+        <h1>Zoggy Foods</h1>
         <div class="nav-links">
             <span class="nav-link">Profile</span>
-            <span class="nav-link">Cart</span>
-            <span class="nav-link">Search</span>
+            <a href="cart"><span  class="nav-link">Cart</span></a>
+            <a class="side-link"><button onclick="function logout() {
+                localStorage.setItem('Authorization',null);
+                window.location.href = '/login';
+                }
+                logout()">LogOut</button></a>
+
         </div>
     </div>
 
     <div class="menu">
-        <div class="form-control">
-            <div class="foodCategory">
-                <h1>Food Category:</h1><br/>
-                <input type="radio" id="burger" name="foodCategory" value="burger">
-                <label for="burger">Burger</label><br/>
-                <input type="radio" id="pizza" name="foodCategory" value="Pizza">
-                <label for="pizza">Pizza</label><br/>
-                <input type="radio" id="bev" name="foodCategory" value="coffee">
-                <label for="bev">Coffee</label><br/>
-                <input type="radio" id="pasta" name="foodCategory" value="pasta">
-                <label for="pasta">Pasta</label>
-            </div>
-            <div class="foodType">
-                <h1>Food Type:</h1><br/>
-                <input type="radio" id="all" name="foodType" value="all">
-                <label for="all">All</label><br/>
-                <input type="radio" id="veg" name="foodType" value="veg">
-                <label for="veg">Vegetarian</label><br/>
-                <input type="radio" id="nonveg" name="foodType" value="nonveg">
-                <label for="nonveg">Non-Vegetarian</label><br/>
-                <input type="radio" id="seasonal" name="foodType" value="seasonal">
-                <label for="seasonal">Seasonal</label>
-            </div>
-        </div>
+
         <div class="menucard">
             <div class="card">
                 <img src="https://via.placeholder.com/300" alt="Food">
@@ -260,7 +232,7 @@
 
         </div><div class="menucard">
         <div class="card">
-            <img src="../static/images/bur.jpg" alt="Food">
+            <img src="https://via.placeholder.com/300" alt="Food">
             <div class="card-content">
                 <h2>Food Name</h2>
                 <p class="price">$10</p>

@@ -227,22 +227,32 @@
             background-color: #005f70;
         }
 
+        a {
+            text-decoration: none;
+            color: white;
+            padding: 10px;
+        }
+
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="navbar">
-        <h3>Zoggy Foods</h3>
+        <a href="/" id="imageLink">
+            <img th:src="@{/images/burger.png}" alt="Burger Image">
+        </a>
+
+        <h1>Zoggy Foods</h1>
         <div class="nav-links">
-            <a href="/profile" class="nav-link">Profile</a>
-            <a href="/cart" class="nav-link">Cart</a>
+            <span class="nav-link">Profile</span>
+            <a href="cart"><span  class="nav-link">Cart</span></a>
             <a class="side-link"><button onclick="function logout() {
-            localStorage.setItem('Authorization',null);
-            window.location.href = '/login';
-            }
-            logout()">LogOut</button></a>
-            <span class="nav-link">Search</span>
+                localStorage.setItem('Authorization',null);
+                window.location.href = '/login';
+                }
+                logout()">LogOut</button></a>
+
         </div>
     </div>
     <div class="row">
@@ -292,7 +302,7 @@
             </tr>
             </tbody>
         </table>
-        <button id="payButton" onclick="redirectToPay()">Pay Here</button>
+        <button id="payButton">Order Now</button>
 
     </div>
 </div>

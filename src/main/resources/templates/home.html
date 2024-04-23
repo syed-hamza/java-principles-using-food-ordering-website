@@ -10,7 +10,10 @@
 <div class="background">
     <div class="container">
         <div class="navbar">
-            <img th:src="@{/images/burger.png}" alt="Zoggy Foods Logo">
+            <a href="/" id="imageLink">
+                <img th:src="@{/images/burger.png}" alt="Burger Image">
+            </a>
+
             <h1>Zoggy Foods</h1>
             <div class="nav-links">
                 <span class="nav-link">Profile</span>
@@ -20,72 +23,17 @@
                 window.location.href = '/login';
                 }
                 logout()">LogOut</button></a>
-                <span class="nav-link">Search</span>
+
             </div>
         </div>
         <div class="main-content">
             <h2 th:text="${message}"></h2>
             <p>In the mood for food</p>
-        </div>
-    </div>
-</div>
-<div class="footer">
-    <div class="top-restaurants">
-        <h3>Order From Our Handpicked Favorites</h3>
-        <div class="restaurant-card">
-            <a href="/restaurants"> <!-- Add the href attribute with the destination page -->
-                <img th:src="@{/images/asian.jpg}" alt="Restaurant 1">
-            </a>
-            <div class="restaurant-header">
-                <h4>Restaurant 1</h4>
-                <img th:src="@{/images/hearthollow.svg}" alt="Favorite" class="heart-icon" onclick="toggleHeart(this)">
-            </div>
-            <p>Description of Restaurant 4</p>
-        </div>
-        <div class="restaurant-card">
-            <a href="/restaurants"> <!-- Add the href attribute with the destination page -->
-                <img th:src="@{/images/bur.jpg}" alt="Restaurant 2">
-            </a>
-            <div class="restaurant-header">
-                <h4>Restaurant 1</h4>
-                <img th:src="@{/images/hearthollow.svg}" alt="Favorite" class="heart-icon" onclick="toggleHeart(this)">
-            </div>
-            <p>Description of Restaurant 4</p>
-        </div>
-        <div class="restaurant-card">
-            <a href="/restaurants"> <!-- Add the href attribute with the destination page -->
-                <img th:src="@{/images/piz.jpg}" alt="Restaurant 3">
-            </a>
-            <div class="restaurant-header">
-                <h4>Restaurant 1</h4>
-                <img th:src="@{/images/hearthollow.svg}" alt="Favorite" class="heart-icon" onclick="toggleHeart(this)">
-            </div>
-            <p>Description of Restaurant 4</p>
-        </div>
-        <div class="restaurant-card">
-            <a href="/restaurants"> <!-- Add the href attribute with the destination page -->
-                <img th:src="@{/images/taco.jpg}" alt="Restaurant 4">
-            </a>
-            <div class="restaurant-header">
-                <h4>Restaurant 1</h4>
-                <img th:src="@{/images/hearthollow.svg}" alt="Favorite" class="heart-icon" onclick="toggleHeart(this)">
-            </div>
-            <p>Description of Restaurant 4</p>
+            <a href="/restaurants" id="menubtn">Go to menu</a>
         </div>
     </div>
 </div>
 
-<script>
-    console.log(localStorage.getItem("Authorization"))
-    function toggleHeart(icon) {
-        // Toggle the src attribute of the heart icon between hollow and solid versions
-        if (icon.src.includes('hollow')) {
-            icon.src = '../images/heartsolid.svg';
-        } else {
-            icon.src = '../images/hearthollow.svg';
-        }
-    }
-</script>
 
 </body>
 </html>

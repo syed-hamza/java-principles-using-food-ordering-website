@@ -63,7 +63,11 @@ body {
     cursor: pointer;
 }
 
-
+a {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+}
 
 .main-content {
     padding: 10px;
@@ -87,77 +91,24 @@ body {
     color: white;
 }
 
-.footer {
-    position: relative;
-    margin-top: 20px; /* Add some space between the main content and the footer */
+#menubtn{
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ffffff;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.top-restaurants {
-    display: flex;
-    flex-wrap: wrap; /* Allow restaurants to wrap to the next line */
-    justify-content: space-between; /* Distribute restaurants evenly */
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 98%;
-    backdrop-filter: blur(8px); /* Add blur effect */
-    background-color: rgba(255, 255, 255, 0.5);
-    padding: 20px;
-    color: black;
-    border: black solid 3px;
-}
+/* Hover effect */
 
-.top-restaurants h3 {
-    position: absolute;
-    top: -20px; /* Adjust as needed */
-    left: 20px;
-    padding: 10px;
-}
+#menubtn:hover{
 
+        background-color: #45a049;
 
-.restaurant-card {
-    width: calc(22% - 10px); /* Adjust width dynamically to fit four cards in one line */
-    margin-bottom: 5px; /* Adjust margin as needed */
-    margin-right: 5px; /* Adjust margin as needed */
-    margin-top: 20px;
-    padding: 10px;
-}
-
-
-
-
-.restaurant-card img {
-    width: 30%;
-    height: auto;
-}
-
-
-
-.restaurant-list {
-    display: flex; /* Use flexbox for layout */
-    justify-content: center; /* Center the restaurant items horizontally */
-    align-items: center; /* Center the restaurant items vertically */
-    margin: 0; /* Remove any margin */
-    padding: 0; /* Remove any padding */
-}
-
-.restaurant {
-    margin: 0 20px; /* Add spacing between restaurant items */
-    text-align: center; /* Center the text within each restaurant item */
-}
-
-.restaurant-card img {
-    width: 98%; /* Ensure the image fills the container */
-    height: 200px; /* Set a fixed height for all images */
-    object-fit: cover; /* Ensure the image covers the entire container */
-}
-
-.restaurant-card .restaurant-header .heart-icon {
-    width: 50px; /* Adjust the width as needed */
-    height: 50px; /* Adjust the height as needed */
-    margin-left: 200px;
-}
-.restaurant-card .restaurant-header {
-    display: flex; /* Use flexbox layout */
-    align-items: center; /* Align items vertically */
 }
