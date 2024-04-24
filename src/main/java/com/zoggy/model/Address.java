@@ -13,7 +13,7 @@ import java.util.List;
 public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="address_id", unique = true, nullable = false)
+    @Column(name="addressID", unique = true, nullable = false)
     private Long addressId;
 
     // Getters and setters
