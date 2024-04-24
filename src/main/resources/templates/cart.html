@@ -257,67 +257,42 @@
     </div>
     <div class="row">
     <div class="cartpage">
-    <div class="cart">
-        <div class="cart-img">
-            <img th:src="@{/static/images/bur.jpg}">
-        </div>
-        <div class="cart-content">
-            <h3 th:text="${foodName}">Food Name</h3>
-            <div class="quantity-control">
-                <span class="quantity">0</span>
-                <button class="add-to-cart-btn">Remove from Cart</button>
-            </div></br>
-            <h3>Total</h3>
-        </div>
-    </div>
-    <div class="cart">
-        <div class="cart-img">
-            <img th:src="@{/static/images/bur.jpg}">
-        </div>
-        <div class="cart-content">
-            <h3 th:text="${foodName}">Food Name</h3>
-            <div class="quantity-control">
-                <span class="quantity">0</span>
-                <button class="add-to-cart-btn">Remove from Cart</button>
-            </div></br>
-            <h3>Total</h3>
-        </div>
-    </div>
-    <div class="bill">
-        <table>
-            <caption><h2>Billing details</h2></caption>
+        <div id = "foodPlaceholder"></div>
+        <div class="bill">
+            <table>
+                <caption><h2>Billing details</h2></caption>
 
-            <tbody>
-            <tr>
-                <td>Item Total</td>
-                <td><span id = "price"></span></td>
-            </tr>
-            <tr>
-                <td>Delivery Fee</td>
-                <td><span>5$</span></td>
-            </tr>
-            <tr>
-                <td>Total pay</td>
-                <td><span id = "total"></span></td>
-            </tr>
-            </tbody>
-        </table>
-        <button id="payButton">Order Now</button>
+                <tbody>
+                <tr>
+                    <td>Item Total</td>
+                    <td><span id = "price"></span></td>
+                </tr>
+                <tr>
+                    <td>Delivery Fee</td>
+                    <td><span>5$</span></td>
+                </tr>
+                <tr>
+                    <td>Total pay</td>
+                    <td><span id = "total"></span></td>
+                </tr>
+                </tbody>
+            </table>
+            <button id="payButton">Order Now</button>
 
-    </div>
-</div>
+            </div>
+        </div>
         <div class="address">
             <h1>Chose Your Address</h1>
             <div id = "addressPlaceholder">
                 <div class="address-card">
-                    <h2>Home</h2>
+                    <!-- <h2>Home</h2>
                     <div>
                         Street: 123 Main St<br>
                         City: New York<br>
                         State: New York<br>
                         Pincode: 10001<br>
-                    </div></br>
-            </div>
+                    </div></br> -->
+                </div>
                 <button type="submit">Select</button>
             </div>
             <div class="address-card" id="addAddressForm">
@@ -338,10 +313,10 @@
 </div>
 <script>
     console.log(localStorage.getItem("Authorization"))
-    function item_body(foodName,total,amt){
+    function item_body(foodName,total,amt,imgname){
         return `<div class="cart">
         <div class="cart-img">
-            <img th:src="@{/static/images/bur.jpg}">
+            <img src="/images/${imgname}">
         </div>
         <div class="cart-content">
             <h3 th:text="${foodName}">${foodName}</h3>
@@ -370,6 +345,7 @@
                     throw new Error(errorMessage);
                 });
             }
+            console.log(response);
             return response.json();
         })
         .then(data => {
@@ -377,13 +353,16 @@
             price = document.getElementById("price")
             totalp = document.getElementById("total")
             console.log("Items:", data);
-            const placeholder = document.getElementById("addressPlaceholder");
+            const placeholder = document.getElementById("foodPlaceholder");
             let out = '';
-            data = data["items"]
-            for(let i in data) {
-                const item = data[i];
-                out += item_body(item["foodName"],item["totalPrice"],item["quantity"])
-                total += item["totalPrice"]
+            cart = data["cartItems"]
+            foods = data["foods"]
+            for(let i in cart) {
+                const CartItem = cart[i];
+                const food = foods[i];
+                console.log(food)
+                out += item_body(food["name"],CartItem["totalPrice"],CartItem["quantity"],food["imageFilename"])
+                total += CartItem["totalPrice"]
             }
             placeholder.innerHTML = out;
             price.textContent = total + "$"
@@ -391,7 +370,7 @@
         }).then(data=>{addevnl()})
         .catch(error => {
             console.error("Error occurred:", error.message);
-            alert(error.message); // Display error message in an alert
+            // alert(error.message); // Display error message in an alert
         });
 
     window.addEventListener('load', function() {
@@ -423,8 +402,6 @@
             })
             .catch(error => {
                 console.error("Error occurred:", error.message);
-                // Handle the error gracefully, e.g., display a message to the user
-                // alert("Failed to fetch addresses. Please try again later.");
             });
     }
 

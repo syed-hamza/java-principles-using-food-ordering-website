@@ -11,11 +11,11 @@ public interface CartService {
 
     public Cart removeItemFromCart(Long cartItemId, String jwt)throws Exception;
 
-    public double calculateCartTotals(Cart cart) throws Exception;
+    public double calculateCartTotals(Cart cart);
 
     public Cart findCartById(Long id) throws Exception;
 
-    public Cart findCartByUserId(Long userId) throws Exception;
+    public Cart findCartByUserId(Long userId);
 
     public Cart clearCart(Long userId)throws Exception;
 

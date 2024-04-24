@@ -16,7 +16,7 @@ public class Food {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String name;
     private String type;
     private String category;
@@ -28,11 +28,11 @@ public class Food {
     @JoinColumn(name = "restaurant_id") // Assuming the column name in the food table
     private Restaurant restaurant;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

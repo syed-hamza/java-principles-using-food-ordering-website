@@ -1,14 +1,13 @@
 package com.zoggy.controller;
 
 import com.zoggy.config.JwtProvider;
-import com.zoggy.model.Cart;
-import com.zoggy.model.Food;
-import com.zoggy.model.USER_ROLE;
-import com.zoggy.model.User;
+import com.zoggy.model.*;
 import com.zoggy.repository.CartRepository;
 import com.zoggy.repository.UserRepository;
 import com.zoggy.request.LoginRequest;
 import com.zoggy.response.AuthResponse;
+import com.zoggy.service.UserService;
+import com.zoggy.response.cartItemResponse;
 import com.zoggy.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.zoggy.service.UserService;
 
 import java.util.Collection;
 import java.util.List;
@@ -68,6 +66,16 @@ public class AuthController {
 
     @Autowired
     private CartRepository cartRepository;
+
+    @GetMapping("/authenticate")
+    public ResponseEntity<?> authenticate(@RequestHeader("Authorization") String jwt) {
+        User user = userService.findUserByJwtToken(jwt);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("UNAUTHORIZED");
+        }
+        return ResponseEntity.ok().body("AUTHORIZED");
+    }
+
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse>createUserHandler(@RequestBody User user) throws Exception {

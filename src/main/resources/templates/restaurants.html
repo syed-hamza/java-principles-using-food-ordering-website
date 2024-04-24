@@ -197,30 +197,6 @@
         </div>
     </div>
     <div class="menu">
-        <div class="form-control">
-            <div class="foodCategory">
-                <h1>Food Category:</h1><br/>
-                <input type="radio" id="burger" name="foodCategory" value="burger">
-                <label for="burger">Burger</label><br/>
-                <input type="radio" id="pizza" name="foodCategory" value="Pizza">
-                <label for="pizza">Pizza</label><br/>
-                <input type="radio" id="bev" name="foodCategory" value="coffee">
-                <label for="bev">Coffee</label><br/>
-                <input type="radio" id="pasta" name="foodCategory" value="pasta">
-                <label for="pasta">Pasta</label>
-            </div>
-            <div class="foodType">
-                <h1>Food Type:</h1><br/>
-                <input type="radio" id="all" name="foodType" value="all">
-                <label for="all">All</label><br/>
-                <input type="radio" id="veg" name="foodType" value="veg">
-                <label for="veg">Vegetarian</label><br/>
-                <input type="radio" id="nonveg" name="foodType" value="nonveg">
-                <label for="nonveg">Non-Vegetarian</label><br/>
-                <input type="radio" id="seasonal" name="foodType" value="seasonal">
-                <label for="seasonal">Seasonal</label>
-            </div>
-        </div>
         <div class="menucard">
             <div th:each="food : ${foods}" class="col-md-4">
                 <div class="card">
@@ -246,10 +222,29 @@
 
 
 <script th:inline="javascript">
+    var itemsData;
     console.log(localStorage.getItem("Authorization"));
-    const categories = ['Burger', 'Pizza', 'Coffee', 'Pasta'];
-    const foodTypes = [{label:"All", value:"all"}, {label: "Vegetarian", value: "veg"}, {label: "Non-Vegetarian", value: "nonveg"}, {label: "Seasonal", value: "seasonal"}];
+    async function authenticate() {
+        try {
+            // Make a GET request to your endpoint
+            const response = await fetch('/authenticate', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("Authorization")}` // Replace 'validJWT' with your actual JWT
+                }
+            });
 
+            // Check if response status is unauthorized
+            if (!response.ok) {
+                // Redirect to login page
+                alert('UNAUTHORIZED');
+                window.location.href = '/login';
+                return;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+    authenticate();
     document.addEventListener("DOMContentLoaded", function() {
         function fetchFoods() {
         const jwtToken = localStorage.getItem("Authorization");
@@ -268,6 +263,7 @@
         })
         .then(foods => {
             console.log("Foods:", foods);
+            itemsData =foods;
             renderMenuCards(foods); // Render menu cards based on fetched foods
             setupQuantityControls(); // Initialize quantity controls after rendering
         })
@@ -281,16 +277,14 @@
         menucardContainer.innerHTML = ''; // Clear previous menu cards
 
         foods.forEach(food => {
+            console.log(foods)
             const card = document.createElement("div");
             card.className = "card";
-
-<!--            const img = document.createElement("img");-->
-<!--            img.src = '/images/' + food.imageFilename;-->
-<!--            img.alt = "Food";-->
-
             const cardContent = document.createElement("div");
             cardContent.className = "card-content";
+            cardContent.id= food.id
             cardContent.innerHTML = `
+                <img src="/images/${food["imageFilename"]}"></img>
                 <h2>${food.name}</h2>
                 <p class="price">$${food.price}</p>
                 <p>${food.description}</p>
@@ -298,7 +292,7 @@
                     <button class="quantity-btn minus">-</button>
                     <span class="quantity">0</span>
                     <button class="quantity-btn plus">+</button>
-                    <button class="add-to-cart-btn">Add to Cart</button>
+                    <button id = ${food.id} class="add-to-cart-btn">Add to Cart</button>
                 </div>
             `;
 
@@ -345,7 +339,7 @@
 
             if (quantity > 0) {
                 // Retrieve foodId from the dataset of the clicked button
-                const foodId = addToCartBtn.dataset.foodId;
+                const foodId = this.id;
 
                 console.log("foodid:" + foodId);
 

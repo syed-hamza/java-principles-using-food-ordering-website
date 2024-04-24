@@ -86,7 +86,7 @@ public class CartServiceImp implements CartService{
     }
 
     @Override
-    public double calculateCartTotals(Cart cart) throws Exception {
+    public double calculateCartTotals(Cart cart){
         double total=0L;
 
         for(CartItem cartItem :cart.getItems()){
@@ -106,7 +106,7 @@ public class CartServiceImp implements CartService{
     }
 
     @Override
-    public Cart findCartByUserId(Long userId) throws Exception {
+    public Cart findCartByUserId(Long userId){
        // User user=userService.findUserByJwtToken(jwt);
         Cart cart= cartRepository.findByCustomerId(userId);
         cart.setTotal(calculateCartTotals(cart));

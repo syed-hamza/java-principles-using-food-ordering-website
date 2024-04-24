@@ -11,5 +11,5 @@ public interface FoodService {
 
     public List<Food> getAllFood();
 
-    public Food findFoodById(Long foodId)throws Exception;
+    public Food findFoodById(Long foodId);
 }
