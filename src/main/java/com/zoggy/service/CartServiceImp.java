@@ -121,4 +121,10 @@ public class CartServiceImp implements CartService{
         cart.getItems().clear();
         return cartRepository.save(cart);
     }
+
+    @Override
+    public String deleteCartItem(Long id){
+        cartItemRepository.deleteById(id);
+        return "Success";
+    }
 }

@@ -313,7 +313,7 @@
 </div>
 <script>
     console.log(localStorage.getItem("Authorization"))
-    function item_body(foodName,total,amt,imgname){
+    function item_body(id,foodName,total,amt,imgname){
         return `<div class="cart">
         <div class="cart-img">
             <img src="/images/${imgname}">
@@ -322,11 +322,33 @@
             <h3 th:text="${foodName}">${foodName}</h3>
             <div class="quantity-control">
                 <span class="quantity">${amt}</span>
-                <button class="add-to-cart-btn">Remove from Cart</button>
+                <button onclick = "deleteCartElem(${id})" id = ${id} class="add-to-cart-btn">Remove from Cart</button>
             </div></br>
             <h3>Total:${total}</h3>
         </div>
     </div>`
+    }
+    function deleteCartElem(id){
+        const jwtToken = localStorage.getItem("Authorization");
+        fetch('/Delete-Cart-Item', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            },
+            body: id
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Address deleted successfully');
+                    fetchAddresses(); // Fetch and render addresses again after deletion
+                } else {
+                    throw new Error('Failed to delete address');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
     fetch("/get-items", {
         method: "GET",
@@ -361,7 +383,7 @@
                 const CartItem = cart[i];
                 const food = foods[i];
                 console.log(food)
-                out += item_body(food["name"],CartItem["totalPrice"],CartItem["quantity"],food["imageFilename"])
+                out += item_body(CartItem["id"],food["name"],CartItem["totalPrice"],CartItem["quantity"],food["imageFilename"])
                 total += CartItem["totalPrice"]
             }
             placeholder.innerHTML = out;
@@ -552,12 +574,6 @@
         }).catch(error => {
             console.error('Error:', error);
         });
-    }
-
-
-    function redirectToLogin() {
-
-        window.location.href = "/login";
     }
 
 </script>

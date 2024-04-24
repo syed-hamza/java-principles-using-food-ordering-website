@@ -17,6 +17,8 @@ public interface CartService {
 
     public Cart findCartByUserId(Long userId);
 
+    public String deleteCartItem(Long id);
+
     public Cart clearCart(Long userId)throws Exception;
 
 }

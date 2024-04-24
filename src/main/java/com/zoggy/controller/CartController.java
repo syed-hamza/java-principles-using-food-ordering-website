@@ -51,6 +51,22 @@ public class CartController {
         }
     }
 
+    @DeleteMapping("/Delete-Cart-Item")
+    public ResponseEntity<?> deleteCartItem(@RequestBody Long id, @RequestHeader("Authorization") String jwt) {
+        try {
+
+            User user = userService.findUserByJwtToken(jwt);
+            if(user==null){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No account");
+            }
+            String message = cartService.deleteCartItem(id);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body("Address added successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while adding address");
+        }
+    }
+
     @GetMapping("/cart-address")
     public ResponseEntity<?> getCartAddresses(@RequestHeader("Authorization") String jwt) {
         try {
