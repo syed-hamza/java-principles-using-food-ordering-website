@@ -340,10 +340,10 @@
         })
             .then(response => {
                 if (response.ok) {
-                    console.log('Address deleted successfully');
-                    fetchAddresses(); // Fetch and render addresses again after deletion
+                    console.log('cart item deleted successfully');
+                    location.reload()
                 } else {
-                    throw new Error('Failed to delete address');
+                    throw new Error('Failed to delete Cart Item');
                 }
             })
             .catch(error => {
