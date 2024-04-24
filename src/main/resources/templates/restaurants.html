@@ -48,11 +48,24 @@
             cursor: pointer;
         }
 
-       a{
-           text-decoration: none;
-           color: white;
-           padding: 10px;
-       }
+        /* Styling for the form control container */
+        .form-control {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 120px; /* Adjust this value as needed */
+            left: 0;
+
+        }
+
+
+        /* Styling for food category and food type containers */
+        .foodCategory,
+        .foodType {
+            padding: 10px;
+
+        }
 
         .form-control h1{
             padding: 10px;
@@ -167,246 +180,206 @@
 <body>
 <div class="container">
     <div class="navbar">
-        <a href="/" id="imageLink">
-            <img th:src="@{/images/burger.png}" alt="Burger Image">
-        </a>
 
-        <h1>Zoggy Foods</h1>
+        <h3>Zoggy Foods</h3>
         <div class="nav-links">
             <span class="nav-link">Profile</span>
-            <a href="cart"><span  class="nav-link">Cart</span></a>
-            <a class="side-link"><button onclick="function logout() {
-                localStorage.setItem('Authorization',null);
-                window.location.href = '/login';
-                }
-                logout()">LogOut</button></a>
-
+            <span class="nav-link">Cart</span>
+            <span class="nav-link">Search</span>
         </div>
     </div>
 
     <div class="menu">
-
+        <div class="form-control">
+            <div class="foodCategory">
+                <h1>Food Category:</h1><br/>
+                <input type="radio" id="burger" name="foodCategory" value="burger">
+                <label for="burger">Burger</label><br/>
+                <input type="radio" id="pizza" name="foodCategory" value="Pizza">
+                <label for="pizza">Pizza</label><br/>
+                <input type="radio" id="bev" name="foodCategory" value="coffee">
+                <label for="bev">Coffee</label><br/>
+                <input type="radio" id="pasta" name="foodCategory" value="pasta">
+                <label for="pasta">Pasta</label>
+            </div>
+            <div class="foodType">
+                <h1>Food Type:</h1><br/>
+                <input type="radio" id="all" name="foodType" value="all">
+                <label for="all">All</label><br/>
+                <input type="radio" id="veg" name="foodType" value="veg">
+                <label for="veg">Vegetarian</label><br/>
+                <input type="radio" id="nonveg" name="foodType" value="nonveg">
+                <label for="nonveg">Non-Vegetarian</label><br/>
+                <input type="radio" id="seasonal" name="foodType" value="seasonal">
+                <label for="seasonal">Seasonal</label>
+            </div>
+        </div>
         <div class="menucard">
-            <div class="card">
-                <img src="https://via.placeholder.com/300" alt="Food">
-                <div class="card-content">
-                    <h2>Food Name</h2>
-                    <p class="price">$10</p>
-                    <p>Description of the food goes here...</p>
-                    <div class="quantity-control">
-                        <button class="quantity-btn minus">-</button>
-                        <span class="quantity">0</span>
-                        <button class="quantity-btn plus">+</button>
-                        <button class="add-to-cart-btn">Add to Cart</button>
+            <div th:each="food : ${foods}" class="col-md-4">
+                <div class="card">
+                    <img th:src="@{/images/cart.png}" alt="Burger Image">
+                    <div class="card-content">
+                        <h2 th:text="${food.name}"></h2>
+                        <p class="price" th:text="'$' + ${food.price}"></p>
+                        <p th:text="${food.description}"></p>
+                        <div class="quantity-control">
+                            <button class="quantity-btn minus">-</button>
+                            <span class="quantity">0</span>
+                            <button class="quantity-btn plus">+</button>
+                            <button class="add-to-cart-btn" th:data-food-id="${food.id}">Add to Cart</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <img src="https://via.placeholder.com/300" alt="Food">
-                <div class="card-content">
-                    <h2>Food Name</h2>
-                    <p class="price">$10</p>
-                    <p>Description of the food goes here...</p>
-                    <div class="quantity-control">
-                        <button class="quantity-btn minus">-</button>
-                        <span class="quantity">0</span>
-                        <button class="quantity-btn plus">+</button>
-                        <button class="add-to-cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img src="https://via.placeholder.com/300" alt="Food">
-                <div class="card-content">
-                    <h2>Food Name</h2>
-                    <p class="price">$10</p>
-                    <p>Description of the food goes here...</p>
-                    <div class="quantity-control">
-                        <button class="quantity-btn minus">-</button>
-                        <span class="quantity">0</span>
-                        <button class="quantity-btn plus">+</button>
-                        <button class="add-to-cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-
-        </div><div class="menucard">
-        <div class="card">
-            <img src="https://via.placeholder.com/300" alt="Food">
-            <div class="card-content">
-                <h2>Food Name</h2>
-                <p class="price">$10</p>
-                <p>Description of the food goes here...</p>
-                <div class="quantity-control">
-                    <button class="quantity-btn minus">-</button>
-                    <span class="quantity">0</span>
-                    <button class="quantity-btn plus">+</button>
-                    <button class="add-to-cart-btn">Add to Cart</button>
-                </div>
-            </div>
         </div>
-        <div class="card">
-            <img src="https://via.placeholder.com/300" alt="Food">
-            <div class="card-content">
-                <h2>Food Name</h2>
-                <p class="price">$10</p>
-                <p>Description of the food goes here...</p>
-                <div class="quantity-control">
-                    <button class="quantity-btn minus">-</button>
-                    <span class="quantity">0</span>
-                    <button class="quantity-btn plus">+</button>
-                    <button class="add-to-cart-btn">Add to Cart</button>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://via.placeholder.com/300" alt="Food">
-            <div class="card-content">
-                <h2>Food Name</h2>
-                <p class="price">$10</p>
-                <p>Description of the food goes here...</p>
-                <div class="quantity-control">
-                    <button class="quantity-btn minus">-</button>
-                    <span class="quantity">0</span>
-                    <button type="button" class="quantity-btn plus">+</button>
-                    <button type="submit" class="add-to-cart-btn">Add to Cart</button>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    </div>
+</div>
 </div>
 
 
 <script th:inline="javascript">
-    function checkAuthorization() {
-        const jwtToken = localStorage.getItem("Authorization");
+    console.log(localStorage.getItem("Authorization"));
+    const categories = ['Burger', 'Pizza', 'Coffee', 'Pasta'];
+    const foodTypes = [{label:"All", value:"all"}, {label: "Vegetarian", value: "veg"}, {label: "Non-Vegetarian", value: "nonveg"}, {label: "Seasonal", value: "seasonal"}];
 
-        fetch('/check', {
-            method: 'GET',
+    document.addEventListener("DOMContentLoaded", function() {
+        function fetchFoods() {
+        const jwtToken = localStorage.getItem("Authorization");
+        fetch("/get-food", {
+            method: "GET",
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${jwtToken}`
             },
         })
-            .then(response => {
-                if (response.status === 200) {
-                    console.log('Authorization successful');
-                    // Handle success if needed
-                } else if (response.status === 401) {
-                    console.log('Authorization failed');
-                    alert("login please")
-                    window.location.href = '/login'; // Change '/login' to your actual login page URL
-                } else {
-                    console.log('Unexpected error');
-                    // Handle unexpected error if needed
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Handle network error if needed
-            });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to fetch food items");
+            }
+            return response.json();
+        })
+        .then(foods => {
+            console.log("Foods:", foods);
+            renderMenuCards(foods); // Render menu cards based on fetched foods
+            setupQuantityControls(); // Initialize quantity controls after rendering
+        })
+        .catch(error => {
+            console.error("Error occurred:", error.message);
+        });
     }
 
-    // Call the function to check authorization when needed
-    checkAuthorization();
+    function renderMenuCards(foods) {
+        const menucardContainer = document.querySelector(".menucard");
+        menucardContainer.innerHTML = ''; // Clear previous menu cards
 
-    console.log(localStorage.getItem("Authorization"));
-    const categories = ['Burger', 'Pizza', 'Coffee', 'Pasta'];
-    const foodTypes = [{label:"All", value:"all"},{label: "Vegetarian",value: "veg"},{label: "Non-Vegetarian",value: "nonveg"},
-        {label: "Seasonal",value: "seasonal"}];
+        foods.forEach(food => {
+            const card = document.createElement("div");
+            card.className = "card";
 
-    document.addEventListener("DOMContentLoaded", function() {
-        function fetchFood() {
-            const jwtToken = localStorage.getItem("Authorization");
-            fetch("get-food", {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${jwtToken}`
-                },
-            })
+<!--            const img = document.createElement("img");-->
+<!--            img.src = '/images/' + food.imageFilename;-->
+<!--            img.alt = "Food";-->
+
+            const cardContent = document.createElement("div");
+            cardContent.className = "card-content";
+            cardContent.innerHTML = `
+                <h2>${food.name}</h2>
+                <p class="price">$${food.price}</p>
+                <p>${food.description}</p>
+                <div class="quantity-control">
+                    <button class="quantity-btn minus">-</button>
+                    <span class="quantity">0</span>
+                    <button class="quantity-btn plus">+</button>
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+            `;
+
+<!--            card.appendChild(img);-->
+            card.appendChild(cardContent);
+            menucardContainer.appendChild(card);
+        });
+    }
+
+    fetchFoods(); // Fetch foods and render menu cards
+
+
+
+   function setupQuantityControls() {
+    const quantityControls = document.querySelectorAll(".quantity-control");
+
+    quantityControls.forEach(function(quantityControl) {
+        const minusButton = quantityControl.querySelector(".minus");
+        const plusButton = quantityControl.querySelector(".plus");
+        const quantityDisplay = quantityControl.querySelector(".quantity");
+        const addToCartBtn = quantityControl.querySelector(".add-to-cart-btn");
+
+        // Decrease quantity when minus button is clicked
+        minusButton.addEventListener("click", function() {
+            let quantity = parseInt(quantityDisplay.textContent);
+            if (quantity > 0) {
+                quantity--;
+                quantityDisplay.textContent = quantity;
+            }
+        });
+
+        // Increase quantity when plus button is clicked
+        plusButton.addEventListener("click", function() {
+            let quantity = parseInt(quantityDisplay.textContent);
+            quantity++;
+            quantityDisplay.textContent = quantity;
+        });
+
+        // Add item to cart when Add to Cart button is clicked
+        addToCartBtn.addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent default button behavior
+
+            let quantity = parseInt(quantityDisplay.textContent);
+
+            if (quantity > 0) {
+                // Retrieve foodId from the dataset of the clicked button
+                const foodId = addToCartBtn.dataset.foodId;
+
+                console.log("foodid:" + foodId);
+
+                const cartData = {
+                    foodId: foodId,
+                    quantity: quantity
+                };
+
+                // Send cart data to server via fetch request
+                fetch('/cart/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem("Authorization")}`
+                    },
+                    body: JSON.stringify(cartData)
+                })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error("Failed to fetch addresses");
+                        throw new Error("Failed to add item to cart");
                     }
                     return response.json();
                 })
                 .then(data => {
-                    console.log("items:", data);
+                    console.log("Item added to cart:", data);
+                    // Reset the quantity display to zero after adding to cart
+                    quantityDisplay.textContent = '0';
+                    // Optionally, update the cart UI here
                 })
                 .catch(error => {
                     console.error("Error occurred:", error.message);
                 });
-        }
-
-        function renderAddresses(addressesData) {
-            const placeholder = document.getElementById("addressPlaceholder");
-            let out = '';
-            for(let i in addressesData) {
-                const addr = addressesData[i];
-                out += `
-            <div class="address-card" id = "${addr.pincode}">
-                <h2>Home</h2>
-                <div>
-                    Street: ${addr.street}<br>
-                    City: ${addr.cityName}<br>
-                    State: ${addr.state}<br>
-                    Pincode: ${addr.pincode}<br>
-                </div>
-                <button type="submit">Select</button>
-                <button class="delete">Delete</button>
-            </div>`;
+            } else {
+                alert("Please select a quantity greater than zero.");
             }
-            placeholder.innerHTML = out;
-            addEventListenersToDeleteButtons();
-        }
-        fetchFood();
-
-
-        const quantityControls = document.querySelectorAll(".quantity-control");
-
-        quantityControls.forEach(function(quantityControl) {
-            const minusButton = quantityControl.querySelector(".minus");
-            const plusButton = quantityControl.querySelector(".plus");
-            const quantityDisplay = quantityControl.querySelector(".quantity");
-            const addToCartBtn = quantityControl.querySelector(".add-to-cart-btn");
-
-            // Decrease quantity when minus button is clicked
-            minusButton.addEventListener("click", function() {
-                let quantity = parseInt(quantityDisplay.textContent);
-                if (quantity > 1) {
-                    quantity--;
-                    quantityDisplay.textContent = quantity;
-                }
-            });
-
-            // Increase quantity when plus button is clicked
-            plusButton.addEventListener("click", function() {
-                let quantity = parseInt(quantityDisplay.textContent);
-                quantity++;
-                quantityDisplay.textContent = quantity;
-            });
-
-            // Add item to cart and set quantity to zero when Add to Cart button is clicked
-            addToCartBtn.addEventListener("click", function(event) {
-                event.preventDefault(); // Prevent default form submission behavior
-                let quantity = parseInt(quantityDisplay.textContent);
-                if (quantity === 0) {
-                    alert("No item selected!");
-                } else {
-                    // Add item to cart logic goes here
-                    // For now, just log the quantity to console and set it to zero
-                    console.log("Item added to cart with quantity: " + quantity);
-                    quantityDisplay.textContent = 0;
-                }
-            });
         });
     });
+}
 
 
+    });
 </script>
 
 </body>

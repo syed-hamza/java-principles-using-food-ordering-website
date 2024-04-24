@@ -95,7 +95,7 @@ public class CartController {
         return "cart"; // Return the name of the Thymeleaf template without the .html extension
     }
 
-    @PutMapping("/cart/add")
+    @PostMapping("/cart/add")
     public ResponseEntity<CartItem> addItemToCart(@RequestBody AddCartItemRequest req,
                                                   @RequestHeader("Authorization") String jwt) throws Exception{
         CartItem cartItem=cartService.addItemToCart(req,jwt);

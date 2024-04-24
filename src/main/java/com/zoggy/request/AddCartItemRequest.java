@@ -13,4 +13,8 @@ public class AddCartItemRequest {
     private int quantity;
 
     private List<String> ingredients;
+
+    public Long getFoodId() {
+        return  foodId;
+    }
 }
